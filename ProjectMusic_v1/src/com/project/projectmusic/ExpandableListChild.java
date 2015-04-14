@@ -1,10 +1,10 @@
 package com.project.projectmusic;
 
-public class ExpandListChild {
+public class ExpandableListChild {
 	private long id;
 	private String Name;
 	private String Tag;
-	public ExpandListChild() {
+	public ExpandableListChild() {
 		id = 0;
 	}
 	public long getId()

@@ -54,14 +54,14 @@ public class Main extends FragmentActivity implements
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	Cursor cur;
-	ArrayList<ExpandListGroup> listGroup;
-	ArrayList<ExpandListChild> listChild;
+	ArrayList<ExpandableListGroup> listGroup;
+	ArrayList<ExpandableListChild> listChild;
 	private ListView listView;
-	private ListSongAdapter listSongAdapter;
+	private AdapterListShow listSongAdapter;
 	private ArrayList<String> arrayListSong = new ArrayList<String>();
 	private ViewPager viewPager;// ViewPager
 	// private ViewPagerAdapter viewPagerAdapter;
-	private ViewPagerAdapter_Common viewAdapter;
+	private AdapterViewPager_Common viewAdapter;
 	private ArrayList<View> arrayView;
 	private ActionBar actionBar;
 	private String[] tabs = { "Song", "Album", "Artist", "Playlist", "Genre",
@@ -120,13 +120,13 @@ public class Main extends FragmentActivity implements
 		// viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 		arrayView = new ArrayList<View>();
 		LayoutInflater inflater = getLayoutInflater();
-		arrayView.add(inflater.inflate(R.layout.fragment, null));
-		arrayView.add(inflater.inflate(R.layout.fragment, null));
-		arrayView.add(inflater.inflate(R.layout.fragment, null));
-		arrayView.add(inflater.inflate(R.layout.fragment, null));
-		arrayView.add(inflater.inflate(R.layout.fragment, null));
-		arrayView.add(inflater.inflate(R.layout.fragment, null));
-		viewAdapter = new ViewPagerAdapter_Common(arrayView,
+		arrayView.add(inflater.inflate(R.layout.music_category, null));
+		arrayView.add(inflater.inflate(R.layout.music_category, null));
+		arrayView.add(inflater.inflate(R.layout.music_category, null));
+		arrayView.add(inflater.inflate(R.layout.music_category, null));
+		arrayView.add(inflater.inflate(R.layout.music_category, null));
+		arrayView.add(inflater.inflate(R.layout.music_category, null));
+		viewAdapter = new AdapterViewPager_Common(arrayView,
 				getApplicationContext(), Main.this);
 		// viewPager.setAdapter(viewPagerAdapter);
 		viewPager.setAdapter(viewAdapter);
@@ -182,7 +182,7 @@ public class Main extends FragmentActivity implements
 			public void onClick(View v) {
 				if (managerMusic.isPlaying) {
 					Intent in = new Intent(getApplicationContext(),
-							Player.class);
+							MusicPlayer.class);
 					startActivity(in);
 				}
 			}

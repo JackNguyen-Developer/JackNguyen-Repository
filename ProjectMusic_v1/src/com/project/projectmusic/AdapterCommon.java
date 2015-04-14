@@ -25,14 +25,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class CommonAdapter extends ArrayAdapter<Item> {
+public class AdapterCommon extends ArrayAdapter<Item> {
 	Context context;
 	int resource;
 	ArrayList<Item> items;
 	Activity act;
 	ArrayList<String> arrayPlay;
 	MusicManager managerMusic;
-	public CommonAdapter(Context context, Activity act,
+	public AdapterCommon(Context context, Activity act,
 			int textViewResourceId, ArrayList<Item> objects) {
 		super(context, textViewResourceId, objects);
 		this.context = context;
@@ -97,7 +97,7 @@ public class CommonAdapter extends ArrayAdapter<Item> {
 						//title.setOnLongClickListener(new LongPressEvent(context, act, item.getTitle() , null));
 					} else
 					{
-						Intent in = new Intent(context,Content.class);
+						Intent in = new Intent(context,MusicListShow.class);
 						in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						in.putExtra("name", item.getName());
 						in.putExtra("value", item.getTitle());
@@ -141,9 +141,9 @@ public class CommonAdapter extends ArrayAdapter<Item> {
 					
 				}
 			});*/
-			LongPressEvent longPress; 
+			EventLongClick longPress; 
 			if (item.getName().equalsIgnoreCase("Song")) {
-				longPress = new LongPressEvent(context, act, item.getTitle(), null, null, -1);
+				longPress = new EventLongClick(context, act, item.getTitle(), null, null, -1);
 			} else {
 				/*ArrayList<String> arrayMusic = new ArrayList<String>();
 				Cursor cursor = managerMusic.getListMusic(item.getName(), item.getTitle(), item.getId());
@@ -153,7 +153,7 @@ public class CommonAdapter extends ArrayAdapter<Item> {
 					arrayMusic.add(titleMusic);
 				} while(cursor.moveToNext());
 				cursor.close();*/
-				longPress = new LongPressEvent(context, act, null , item.getName(), item.getTitle(), item.getId());
+				longPress = new EventLongClick(context, act, null , item.getName(), item.getTitle(), item.getId());
 			}
 			
 			contain.setOnLongClickListener(longPress);

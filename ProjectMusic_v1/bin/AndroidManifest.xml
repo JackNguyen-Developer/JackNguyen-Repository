@@ -30,10 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.project.projectmusic.Content" android:screenOrientation="portrait"/>
+        <activity android:name="com.project.projectmusic.MusicListShow" android:screenOrientation="portrait"/>
 		<service android:name="com.project.projectmusic.MusicService"></service>
 		<activity android:name="com.project.projectmusic.MusicPlay" android:screenOrientation="portrait"></activity>
-		<activity android:name="com.project.projectmusic.Player" android:screenOrientation="portrait"></activity>
+		<activity android:name="com.project.projectmusic.MusicPlayer" android:screenOrientation="portrait"></activity>
 		<activity android:name="com.project.projectmusic.NotificationController"></activity>
     </application>
 

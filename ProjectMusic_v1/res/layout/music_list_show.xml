@@ -26,7 +26,7 @@
 	
 	<include 
 	    android:id="@+id/content_layout_playmusic"
-	    layout="@layout/layout_playmusic"/>
+	    layout="@layout/player_bottom"/>
     
     <!-- <RelativeLayout
         android:id="@+id/layout"

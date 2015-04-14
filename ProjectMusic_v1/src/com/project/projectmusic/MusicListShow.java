@@ -22,7 +22,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Content extends Activity implements MusicManager.ManagerMusicListener, SeekBar.OnSeekBarChangeListener {
+public class MusicListShow extends Activity implements MusicManager.ManagerMusicListener, SeekBar.OnSeekBarChangeListener {
 	TextView title;
 	ListView listView;
 	MusicManager managerMusic;
@@ -33,7 +33,7 @@ public class Content extends Activity implements MusicManager.ManagerMusicListen
 	private SeekBar songProgressBar;
 	private Utilities utils;
 	private Handler handler;
-	ListSongAdapter listSongAdapter;
+	AdapterListShow listSongAdapter;
 	@Override
 	protected void onPause() {
 		
@@ -50,7 +50,7 @@ public class Content extends Activity implements MusicManager.ManagerMusicListen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.content);
+		setContentView(R.layout.music_list_show);
 		title = (TextView) findViewById(R.id.content_title);
 		listView = (ListView) findViewById(R.id.content_list);
 		managerMusic = new MusicManager(this);
@@ -99,8 +99,8 @@ public class Content extends Activity implements MusicManager.ManagerMusicListen
 						Log.e("", "Content.java: error read cursor");
 					}
 				}
-				listSongAdapter = new ListSongAdapter(
-						getApplicationContext(), Content.this,
+				listSongAdapter = new AdapterListShow(
+						getApplicationContext(), MusicListShow.this,
 						R.layout.list_item, arrayListSong);
 				listView.setAdapter(listSongAdapter);
 			}
@@ -141,7 +141,7 @@ public class Content extends Activity implements MusicManager.ManagerMusicListen
 			public void onClick(View v) {
 				if(managerMusic.isPlaying)
 				{
-				Intent in = new Intent(getApplicationContext(), Player.class);
+				Intent in = new Intent(getApplicationContext(), MusicPlayer.class);
 				startActivity(in);
 				}
 			}

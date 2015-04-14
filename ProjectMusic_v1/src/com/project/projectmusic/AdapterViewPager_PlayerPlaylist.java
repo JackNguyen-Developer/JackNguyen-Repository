@@ -23,7 +23,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ViewPagerAdapter_PlayerPlaylist extends PagerAdapter implements /*MusicManager.ManagerMusicListener,*/ SeekBar.OnSeekBarChangeListener {
+public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*MusicManager.ManagerMusicListener,*/ SeekBar.OnSeekBarChangeListener {
 
 	private ArrayList<View> pageViews;
 	private Context context;
@@ -48,8 +48,8 @@ public class ViewPagerAdapter_PlayerPlaylist extends PagerAdapter implements /*M
 	MusicManager managerMusic;
 	//component playlist
 	private ListView listView, listView_Pick;
-	private ListSongAdapter adapterListView;
-	public ViewPagerAdapter_PlayerPlaylist(ArrayList<View> pageViews, Context context, Activity act) {
+	private AdapterListShow adapterListView;
+	public AdapterViewPager_PlayerPlaylist(ArrayList<View> pageViews, Context context, Activity act) {
 		super();
 		this.pageViews = pageViews;
 		this.context = context;
@@ -85,9 +85,9 @@ public class ViewPagerAdapter_PlayerPlaylist extends PagerAdapter implements /*M
 		{
 			listView = (ListView) pageViews.get(position).findViewById(R.id.playlist_common);
 			listView_Pick = (ListView) pageViews.get(position).findViewById(R.id.playlist_pick);
-			adapterListView = new ListSongAdapter(context, act, R.layout.playlist, managerMusic.arrayPlay);
+			adapterListView = new AdapterListShow(context, act, R.layout.playlist_selection, managerMusic.arrayPlay);
 			listView.setAdapter(adapterListView);
-			adapterListView = new ListSongAdapter(context, act, R.layout.playlist, managerMusic.arrayPick);
+			adapterListView = new AdapterListShow(context, act, R.layout.playlist_selection, managerMusic.arrayPick);
 			listView_Pick.setAdapter(adapterListView);
 			break;
 		}

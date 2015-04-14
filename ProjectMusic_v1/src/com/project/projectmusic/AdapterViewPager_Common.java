@@ -18,13 +18,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-public class ViewPagerAdapter_Common extends PagerAdapter {
+public class AdapterViewPager_Common extends PagerAdapter {
 	ArrayList<View> arrayView;
 	Context context;
 	Activity act;
 	//
 	private ListView listView;
-	private CommonAdapter adapter;
+	private AdapterCommon adapter;
 	private Cursor cursor;
 	private ArrayList<Item> arraySong = new ArrayList<Item>();
 	private ArrayList<Item> arrayAlbum = new ArrayList<Item>();
@@ -34,7 +34,7 @@ public class ViewPagerAdapter_Common extends PagerAdapter {
 	private ArrayList<Item> arrayType = new ArrayList<Item>();
 	private MusicManager managerMusic;
 
-	public ViewPagerAdapter_Common(ArrayList<View> arrayView, Context context, Activity act) {
+	public AdapterViewPager_Common(ArrayList<View> arrayView, Context context, Activity act) {
 		this.arrayView = arrayView;
 		this.context = context;
 		this.act = act;
@@ -117,7 +117,7 @@ public class ViewPagerAdapter_Common extends PagerAdapter {
 			}
 		}
 		cursor.close();
-		adapter = new CommonAdapter(context, act, R.layout.list_item, arraySong);
+		adapter = new AdapterCommon(context, act, R.layout.list_item, arraySong);
 		listView.setAdapter(adapter);
 	}
 	private void viewAlbum()
@@ -142,7 +142,7 @@ public class ViewPagerAdapter_Common extends PagerAdapter {
 			}
 		}
 		cursor.close();
-		adapter = new CommonAdapter(context, act, R.layout.list_item, arrayAlbum);
+		adapter = new AdapterCommon(context, act, R.layout.list_item, arrayAlbum);
 		listView.setAdapter(adapter);
 	}
 	private void viewArtist()
@@ -161,7 +161,7 @@ public class ViewPagerAdapter_Common extends PagerAdapter {
 				}
 			}
 			cursor.close();
-			adapter = new CommonAdapter(context, act,
+			adapter = new AdapterCommon(context, act,
 					R.layout.list_item, arrayArtist);
 			listView.setAdapter(adapter);
 		} catch (Exception e) {
@@ -190,7 +190,7 @@ public class ViewPagerAdapter_Common extends PagerAdapter {
 				}
 			}
 			cursor.close();
-			adapter = new CommonAdapter(context, act, R.layout.list_item,
+			adapter = new AdapterCommon(context, act, R.layout.list_item,
 					arrayPlaylist);
 			listView.setAdapter(adapter);
 		} catch (Exception e) {
@@ -218,7 +218,7 @@ public class ViewPagerAdapter_Common extends PagerAdapter {
 			}
 		}
 		cursor.close();
-		adapter = new CommonAdapter(context, act, R.layout.list_item, arrayGenre);
+		adapter = new AdapterCommon(context, act, R.layout.list_item, arrayGenre);
 		listView.setAdapter(adapter);
 	}
 	private void viewType()
@@ -241,7 +241,7 @@ public class ViewPagerAdapter_Common extends PagerAdapter {
 			}
 		}
 		cursor.close();
-		adapter = new CommonAdapter(context, act, R.layout.list_item, arrayType);
+		adapter = new AdapterCommon(context, act, R.layout.list_item, arrayType);
 		listView.setAdapter(adapter);
 	}
 }

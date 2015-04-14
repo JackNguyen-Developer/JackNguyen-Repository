@@ -7,10 +7,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ListSong_ViewGroup extends LinearLayout{
+public class ViewGroup_ListShow extends LinearLayout{
 	public TextView title;
 	public LinearLayout contain;
-	public ListSong_ViewGroup(Context context) {	
+	public ViewGroup_ListShow(Context context) {	
 		super(context);
 		//gan' giao dien cho playlist_item.xml
 		LayoutInflater li = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);//khoi tao doi tuong Inflater

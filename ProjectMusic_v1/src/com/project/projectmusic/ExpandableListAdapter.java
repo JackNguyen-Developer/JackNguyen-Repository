@@ -11,19 +11,19 @@ import android.widget.ExpandableListView;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	private Context context;
-	private ArrayList<ExpandListGroup> groups;
-	public ExpandableListAdapter(Context context, ArrayList<ExpandListGroup> groups) {
+	private ArrayList<ExpandableListGroup> groups;
+	public ExpandableListAdapter(Context context, ArrayList<ExpandableListGroup> groups) {
 		this.context = context;
 		this.groups = groups;
 	}	
-	public void addItem(ExpandListChild item, ExpandListGroup group)
+	public void addItem(ExpandableListChild item, ExpandableListGroup group)
 	{
 		if(!groups.contains(group))
 		{
 			groups.add(group);
 		}
 		int index = groups.indexOf(group);
-		ArrayList<ExpandListChild> child = groups.get(index).getItems();
+		ArrayList<ExpandableListChild> child = groups.get(index).getItems();
 		child.add(item);
 		groups.get(index).setItems(child);
 	}
@@ -35,7 +35,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
-		ArrayList<ExpandListChild> childList = groups.get(groupPosition).getItems();			
+		ArrayList<ExpandableListChild> childList = groups.get(groupPosition).getItems();			
 		return childList.size();
 		
 	}
@@ -47,7 +47,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		ArrayList<ExpandListChild> childList = groups.get(groupPosition).getItems();	
+		ArrayList<ExpandableListChild> childList = groups.get(groupPosition).getItems();	
 		return childList.get(childPosition);
 	}
 
@@ -69,7 +69,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View view, ViewGroup parent) {
-		ExpandListGroup group = (ExpandListGroup) getGroup(groupPosition);
+		ExpandableListGroup group = (ExpandableListGroup) getGroup(groupPosition);
 		if(view == null)
 		{
 			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -83,7 +83,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View view, ViewGroup parent) {			
-		ExpandListChild child = (ExpandListChild) getChild(groupPosition,childPosition);	
+		ExpandableListChild child = (ExpandableListChild) getChild(groupPosition,childPosition);	
 		if(view == null)
 		{		
 			LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);

@@ -29,7 +29,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class LongPressEvent extends DialogFragment implements OnLongClickListener{
+public class EventLongClick extends DialogFragment implements OnLongClickListener{
 	Context context;
 	Cursor cursor;
 	Activity act;
@@ -45,7 +45,7 @@ public class LongPressEvent extends DialogFragment implements OnLongClickListene
 	SimpleCursorAdapter adapter;
 	String value, name;
 	long id;
-	public LongPressEvent(Context context, Activity act, String item, String name, String value, long id)
+	public EventLongClick(Context context, Activity act, String item, String name, String value, long id)
 	{
 		this.context = context;
 		this.act = act;
@@ -59,7 +59,7 @@ public class LongPressEvent extends DialogFragment implements OnLongClickListene
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_dialog, container, false);
+		View view = inflater.inflate(R.layout.dialog_event_long_list, container, false);
 		getDialog().setTitle("Setting");
 		addPlayList = (TextView) view.findViewById(R.id.dialog_addPlayList);
 		addPlaying = (TextView) view.findViewById(R.id.dialog_addPlaying);

@@ -2,9 +2,9 @@ package com.project.projectmusic;
 
 import java.util.ArrayList;
 
-public class ExpandListGroup {
+public class ExpandableListGroup {
 	private String name;
-	private ArrayList<ExpandListChild> items;
+	private ArrayList<ExpandableListChild> items;
 	
 	public String getName() {
 		return name;
@@ -12,10 +12,10 @@ public class ExpandListGroup {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public ArrayList<ExpandListChild> getItems() {
+	public ArrayList<ExpandableListChild> getItems() {
 		return items;
 	}
-	public void setItems(ArrayList<ExpandListChild> Items) {
+	public void setItems(ArrayList<ExpandableListChild> Items) {
 		this.items = Items;
 	}
 }

@@ -30,7 +30,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Player extends Activity implements MusicManager.ManagerMusicListener {
+public class MusicPlayer extends Activity implements MusicManager.ManagerMusicListener {
 	//component viewpager
 	private ImageView[] imageViews;
 	private ViewPager viewPager;
@@ -38,18 +38,18 @@ public class Player extends Activity implements MusicManager.ManagerMusicListene
 	private ImageView imageView;  
 	private ViewGroup viewMain;         // layout for view group
 	private ViewGroup viewContent;
-	ViewPagerAdapter_PlayerPlaylist viewPagerAdapter;
+	AdapterViewPager_PlayerPlaylist viewPagerAdapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);//kich hoat actionbar home
 		//handle viewpager
 		LayoutInflater inflater = getLayoutInflater();
-		viewMain = (ViewGroup) inflater.inflate(R.layout.view_pics, null);
+		viewMain = (ViewGroup) inflater.inflate(R.layout.player_container, null);
 		//set view
 		pageViews = new ArrayList<View>();
 		pageViews.add(inflater.inflate(R.layout.player, null));
-		pageViews.add(inflater.inflate(R.layout.playlist, null));
+		pageViews.add(inflater.inflate(R.layout.playlist_selection, null));
 		//set component
 		imageViews = new ImageView[pageViews.size()];
 		viewContent = (ViewGroup) viewMain.findViewById(R.id.viewGroup);
@@ -57,7 +57,7 @@ public class Player extends Activity implements MusicManager.ManagerMusicListene
 		//set images
 		for(int i = 0; i < pageViews.size(); i++)
 		{
-			imageView = new ImageView(Player.this);
+			imageView = new ImageView(MusicPlayer.this);
 			imageView.setLayoutParams(new LayoutParams(20,20));
 			imageView.setPadding(20, 0, 20, 0);
 			imageViews[i] = imageView;
@@ -68,7 +68,7 @@ public class Player extends Activity implements MusicManager.ManagerMusicListene
 			viewContent.addView(imageViews[i]);
 		}
 		setContentView(viewMain);
-		viewPagerAdapter = new ViewPagerAdapter_PlayerPlaylist(pageViews, getApplicationContext(), Player.this);
+		viewPagerAdapter = new AdapterViewPager_PlayerPlaylist(pageViews, getApplicationContext(), MusicPlayer.this);
 		viewPager.setAdapter(viewPagerAdapter);
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override

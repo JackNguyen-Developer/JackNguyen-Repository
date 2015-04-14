@@ -30,7 +30,7 @@
 
         <include 
             android:id="@+id/main_layout_playmusic"
-            layout="@layout/layout_playmusic"/>
+            layout="@layout/player_bottom"/>
         <!-- <RelativeLayout
             android:id="@+id/layout"
             android:layout_width="fill_parent"

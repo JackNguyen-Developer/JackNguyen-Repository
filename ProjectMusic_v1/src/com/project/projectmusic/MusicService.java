@@ -21,7 +21,7 @@ public class MusicService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {		
-		WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+		/*WindowManager.LayoutParams params = new WindowManager.LayoutParams(
 		           WindowManager.LayoutParams.WRAP_CONTENT,
 		           WindowManager.LayoutParams.WRAP_CONTENT,
 		           WindowManager.LayoutParams.TYPE_PHONE,
@@ -32,7 +32,7 @@ public class MusicService extends IntentService {
 		   );
 		WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
 		inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mView =  (ViewGroup) inflater.inflate(R.layout.layout_playmusic, null);
-		wm.addView(mView,params);
+		mView =  (ViewGroup) inflater.inflate(R.layout.player_bottom, null);
+		wm.addView(mView,params);*/
 	}
 }
