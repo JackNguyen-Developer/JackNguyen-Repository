@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="center"
+    android:background="#222222" 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="bottom">
+
+
+    <SeekBar
+        android:id="@+id/songProgressBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:progressDrawable="@drawable/seekbar_progress"
+        android:thumb="@drawable/seek_handler"
+        android:visibility="gone" />
+	
+	<TextView
+        android:layout_marginLeft="10dp"
+        android:id="@+id/songTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textSize="16dp"
+        android:textColor="#ffffff"
+        android:layout_below="@id/songProgressBar"    
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:lines="1"
+        android:layout_marginRight="150dp"
+         />
+    
+    <ImageView
+        android:id="@+id/btnNext"
+        android:padding="2dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/songProgressBar"
+        android:src="@drawable/btn_next"
+        android:layout_alignParentRight="true" />
+    
+    <ImageView
+        android:id="@+id/btnPlay"
+        android:padding="2dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/songProgressBar"
+        android:layout_toLeftOf="@id/btnNext"
+        android:background="@null"
+        android:src="@drawable/btn_play" />
+
+    <ImageView
+        android:id="@+id/btnPrevious"
+        android:padding="2dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/songProgressBar"
+        android:layout_toLeftOf="@id/btnPlay"
+        android:src="@drawable/btn_previous" />
+
+</RelativeLayout>

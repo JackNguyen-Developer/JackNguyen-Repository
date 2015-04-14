@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/transparent" >
+   <!--  <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="this is dialog fragment"
+        />
+ -->
+ 	<TextView
+        android:id="@+id/dialog_addPlaying"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+       	android:paddingLeft="40dp"
+       	android:paddingTop="10dp"
+       	android:paddingBottom="10dp"
+        android:textSize="16dp"
+        android:background="@color/dialog_item_color"
+        android:textColor="@color/dialog_text_color"
+        android:text="@string/dialog_item_addPlaying"
+         />
+
+ 	<LinearLayout
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="wrap_content"
+ 	    android:orientation="horizontal"
+ 	    android:background="@color/dialog_item_color"
+ 	    android:layout_margin="1dp" >
+
+ 	    <TextView
+ 	        android:id="@+id/dialog_addPlayList"
+ 	        android:layout_width="230dp"
+ 	        android:layout_height="wrap_content"
+ 	        android:background="@color/dialog_item_color"
+ 	        android:paddingBottom="10dp"
+ 	        android:paddingLeft="40dp"
+ 	        android:paddingTop="10dp"
+ 	        android:text="@string/dialog_item_addPlayList"
+ 	        android:textColor="@color/dialog_text_color"
+ 	        android:textSize="16dp" />
+
+ 	    <TextView
+ 	        android:id="@+id/dialog_addNewPlayList"
+ 	        android:layout_width="fill_parent"
+ 	        android:layout_height="wrap_content"
+ 	        android:background="@color/dialog_item_color"
+ 	        android:paddingBottom="10dp"
+ 	        android:paddingRight="20dp"
+ 	        android:paddingTop="10dp"
+ 	        android:text= " NEW "
+ 	        android:textColor="#66ff33"
+ 	        android:textSize="16dp"
+ 	        android:gravity="right"
+ 	        android:visibility="gone" />
+ 	
+ 	</LinearLayout>
+
+ 	<LinearLayout
+ 	    android:id="@+id/dialog_layout_AddNew"
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="wrap_content"
+ 	    android:orientation="horizontal"
+ 	    android:background="@color/dialog_subItem_color"
+ 	    android:layout_marginLeft="30dp"
+ 	    android:visibility="gone" >
+
+ 	    <EditText
+ 	        android:id="@+id/dialog_addEdit"
+ 	        android:layout_width="200dp"
+ 	        android:layout_height="wrap_content"
+ 	        android:paddingBottom="10dp"
+ 	        android:paddingTop="10dp"
+ 	        android:textColor="@color/dialog_text_color"
+ 	        android:textSize="16dp" />
+
+ 	    <TextView
+ 	        android:id="@+id/dialog_Add"
+ 	        android:layout_width="fill_parent"
+ 	        android:layout_height="wrap_content"
+ 	        android:paddingBottom="10dp"
+ 	        android:paddingRight="20dp"
+ 	        android:paddingTop="10dp"
+ 	        android:text= " ADD "
+ 	        android:textColor="#66ff33"
+ 	        android:textSize="16dp"
+ 	        android:gravity="right" 
+ 	        android:background="@color/dialog_item_color" />
+ 	</LinearLayout>
+ 	
+ 	<ListView
+ 	    android:id="@+id/dialog_listPlayList"
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="wrap_content"
+ 	    android:layout_marginLeft="30dp"
+ 	    android:background="@color/dialog_subItem_color"
+ 	    android:visibility="gone" >
+ 	</ListView>
+    
+</LinearLayout>
