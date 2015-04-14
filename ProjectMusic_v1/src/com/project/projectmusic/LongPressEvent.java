@@ -53,6 +53,8 @@ public class LongPressEvent extends DialogFragment implements OnLongClickListene
 		//this.arrayItem = arrayItem;
 		musicManager = new MusicManager(context);
 		this.name = name; this.value = value; this.id = id;
+		
+		
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,11 +68,32 @@ public class LongPressEvent extends DialogFragment implements OnLongClickListene
 		addEdit = (EditText) view.findViewById(R.id.dialog_addEdit);
 		listPlayList = (ListView) view.findViewById(R.id.dialog_listPlayList);
 		dialogLayoutAddNew = (LinearLayout) view.findViewById(R.id.dialog_layout_AddNew);
-		
+		//handle arrayItem if data is array
+		if (name != null && value != null) {
+			Cursor cursorSub = musicManager.getListMusic(name, value, id);
+			cursorSub.moveToFirst();
+			do {
+				String titleMusic = cursorSub.getString(0);
+				arrayItem.add(titleMusic);
+			} while (cursorSub.moveToNext());
+			cursorSub.close();
+		}
+		//event
 		addPlaying.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				musicManager.arrayPick.add(item);
+				if (item == null && arrayItem != null) {
+					for (String item : arrayItem) {
+						musicManager.arrayPick.add(item);
+					}
+				} else {
+					musicManager.arrayPick.add(item);
+
+				}
+				if (!musicManager.isPlayMusicWithArrayPick) {
+					musicManager.count = -1;
+					musicManager.isPlayMusicWithArrayPick = true;
+				}
 				getDialog().cancel();
 			}
 		});
@@ -120,7 +143,7 @@ public class LongPressEvent extends DialogFragment implements OnLongClickListene
 				cursor.moveToPosition(position);
 				long idPlayList = cursor.getLong(1);
 				//
-				if (name != null && value != null) {
+				/*if (name != null && value != null) {
 					Cursor cursorSub = musicManager.getListMusic(name, value,
 							id);
 					cursorSub.moveToFirst();
@@ -129,7 +152,7 @@ public class LongPressEvent extends DialogFragment implements OnLongClickListene
 						arrayItem.add(titleMusic);
 					} while (cursorSub.moveToNext());
 					cursorSub.close();
-				}
+				}*/
 				//
 				System.out.println("data item: "+item);
 				musicManager.addItemPlayList(idPlayList, arrayItem, item);

@@ -33,11 +33,11 @@ public class MusicManager {
 	public static boolean isRepeat = false;
 	public static boolean isShuffle = false;
 	public static boolean isPlaying = false;
+	public static boolean isPlayMusicWithArrayPick = false;
 	//interface
 	interface ManagerMusicListener
 	{
-		public void playMusic();
-		//public void getArrayPlaying(ArrayList<Song> arrayPlaying);
+		public void playMusic();	
 	}
 	ManagerMusicListener listener;//call interface
 	//
@@ -55,7 +55,7 @@ public class MusicManager {
 			Log.e("","error in ManagerMusic.setActivity" + activity.toString());
 		}
 	}
-	//play song
+	//play button
 	public boolean play() {
 		try {
 			if (mediaPlayer.isPlaying()) {
@@ -266,12 +266,18 @@ public class MusicManager {
 	}
 	public String getSong(long id)
 	{
+		String title = null;
+		try{
 		String[] projection = {MediaStore.Audio.Media.TITLE};
 		String selection = MediaStore.Audio.Media._ID + " = ?";
 		String[] selectionArgs = new String[] {String.valueOf(id)};
 		Cursor cur = cr.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, selection, selectionArgs, null);
-		cur.moveToFirst(); String title = cur.getString(0);
+		cur.moveToFirst(); title = cur.getString(0);
 		cur.close();
+		} catch(Exception e)
+		{
+			Log.e("","error in MusicManager.getSong(long id)");
+		}
 		return title;
 	}
 	public Cursor getAllSong()

@@ -170,27 +170,32 @@ public class ViewPagerAdapter_Common extends PagerAdapter {
 	}
 	private void viewPlayList()
 	{
-		cursor = managerMusic.getPlayListMusic();
-		arrayPlaylist = new ArrayList<Item>();
-		if(cursor.moveToFirst())
-		{
-			while(!cursor.isAfterLast())
-			{
-				try {
+		try {
+			cursor = managerMusic.getPlayListMusic();
+			arrayPlaylist = new ArrayList<Item>();
+			if (cursor.moveToFirst()) {
+				while (!cursor.isAfterLast()) {
+
 					Item item = new Item();
+					long id = cursor.getLong(1);
 					item.setId(cursor.getLong(1));
+					
 					item.setName("Playlist");
+					String title = cursor.getString(0);
 					item.setTitle(cursor.getString(0));
+					
 					cursor.moveToNext();
 					arrayPlaylist.add(item);
-				} catch (Exception e) {
-					Log.i("", "info Fragment_Playlist");
+
 				}
 			}
+			cursor.close();
+			adapter = new CommonAdapter(context, act, R.layout.list_item,
+					arrayPlaylist);
+			listView.setAdapter(adapter);
+		} catch (Exception e) {
+			Log.i("", "info Fragment_Playlist");
 		}
-		cursor.close();
-		adapter = new CommonAdapter(context, act, R.layout.list_item, arrayPlaylist);
-		listView.setAdapter(adapter);
 	}
 	private void viewGenre()
 	{

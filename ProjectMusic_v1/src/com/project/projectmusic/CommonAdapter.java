@@ -22,6 +22,7 @@ import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CommonAdapter extends ArrayAdapter<Item> {
@@ -51,6 +52,7 @@ public class CommonAdapter extends ArrayAdapter<Item> {
 		if(item != null)
 		{
 			final TextView title = (TextView) view.findViewById(R.id.title);
+			LinearLayout contain = (LinearLayout) view.findViewById(R.id.contain);
 			ImageView image = (ImageView) view.findViewById(R.id.image);
 			title.setText(item.getTitle());
 			if (item.getName() != null) {
@@ -74,8 +76,39 @@ public class CommonAdapter extends ArrayAdapter<Item> {
 				String t = items.get(i).getTitle();
 				arrayPlay.add(t);
 			}*/
-			
-			title.setOnClickListener(new View.OnClickListener() {		
+			contain.setOnClickListener(new View.OnClickListener() {				
+				@Override
+				public void onClick(View v) {
+					if(item.getName().equalsIgnoreCase("Song"))
+					{
+						//ArrayList<Song> arrayPlaying = new ArrayList<Song>();
+						ArrayList<String> arrayPlay = new ArrayList<String>();
+						for(int i = 0; i < items.size(); i++)
+						{
+							String title = items.get(i).getTitle();
+							arrayPlay.add(title);
+						}		
+						//MusicManager managerMusic = new MusicManager(context);
+						managerMusic.arrayPlay = arrayPlay;
+						managerMusic.count = position;
+						managerMusic.setActivity(act);			
+						managerMusic.playSong();
+						//set long press
+						//title.setOnLongClickListener(new LongPressEvent(context, act, item.getTitle() , null));
+					} else
+					{
+						Intent in = new Intent(context,Content.class);
+						in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						in.putExtra("name", item.getName());
+						in.putExtra("value", item.getTitle());
+						in.putExtra("id", item.getId());
+						context.startActivity(in);	
+						//set long press
+						//title.setOnLongClickListener(new LongPressEvent(context, act, null , arrayPlay));
+					}
+				}
+			});
+			/*title.setOnClickListener(new View.OnClickListener() {		
 				@Override
 				public void onClick(View v) {
 					if(item.getName().equalsIgnoreCase("Song"))
@@ -107,7 +140,7 @@ public class CommonAdapter extends ArrayAdapter<Item> {
 					}
 					
 				}
-			});
+			});*/
 			LongPressEvent longPress; 
 			if (item.getName().equalsIgnoreCase("Song")) {
 				longPress = new LongPressEvent(context, act, item.getTitle(), null, null, -1);
@@ -122,8 +155,8 @@ public class CommonAdapter extends ArrayAdapter<Item> {
 				cursor.close();*/
 				longPress = new LongPressEvent(context, act, null , item.getName(), item.getTitle(), item.getId());
 			}
-		
-			title.setOnLongClickListener(longPress);
+			
+			contain.setOnLongClickListener(longPress);
 		}
 		return view;
 	}

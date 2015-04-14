@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.view.View.OnClickListener;
@@ -50,8 +51,9 @@ public class ListSongAdapter extends ArrayAdapter<String> {
 		final String item = arrayList.get(position);
 		if(item != null) {
 			TextView songTitle = ((ListSong_ViewGroup) workView).title;
+			LinearLayout contain = ((ListSong_ViewGroup) workView).contain;
 			songTitle.setText(item);
-			songTitle.setOnClickListener(new View.OnClickListener() {		
+			/*songTitle.setOnClickListener(new View.OnClickListener() {		
 				@Override
 				public void onClick(View v) {
 					musicManager.arrayPlay = arrayList;
@@ -59,9 +61,21 @@ public class ListSongAdapter extends ArrayAdapter<String> {
 					musicManager.setActivity(act);		
 					musicManager.playSong();		
 				}
-			});
+			});*/
 		
-			songTitle.setOnLongClickListener(new LongPressEvent(context, act, item, null, null, -1));	
+			contain.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					musicManager.arrayPlay = arrayList;
+					musicManager.count = position;			
+					musicManager.setActivity(act);		
+					musicManager.playSong();	
+					
+				}
+			});
+			
+			contain.setOnLongClickListener(new LongPressEvent(context, act, item, null, null, -1));	
 			
 			
 		}	

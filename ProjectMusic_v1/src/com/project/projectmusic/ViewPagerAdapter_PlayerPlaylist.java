@@ -178,11 +178,21 @@ public class ViewPagerAdapter_PlayerPlaylist extends PagerAdapter implements /*M
 			   long totalDuration = managerMusic.mediaPlayer.getDuration();
 			   long currentDuration = managerMusic.mediaPlayer.getCurrentPosition();			  			   
 			   int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
-			   if(progress >= 99 && managerMusic.count >= (managerMusic.arrayPlay.size()-1))
+			   /*if(progress >= 99 && managerMusic.count >= (managerMusic.arrayPlay.size()-1) || progress >= 99
+						&& managerMusic.count >= (managerMusic.arrayPick.size() - 1))
 			   {
 				   managerMusic.repeatMusic();
-			   }
-			   updateImageAlbum();
+			   }*/
+			   if (progress >= 99) {
+					if(managerMusic.count >= (managerMusic.arrayPlay.size() - 1)
+							|| managerMusic.count >= (managerMusic.arrayPick.size() - 1)) {
+						managerMusic.repeatMusic();
+					} else 
+					{
+						managerMusic.nextSong();
+					}
+				}
+			   updateComponent();
 			   songProgressBar.setProgress(progress);		
 			   handler.postDelayed(this, 100);	      
 		   }
@@ -197,8 +207,9 @@ public class ViewPagerAdapter_PlayerPlaylist extends PagerAdapter implements /*M
 			updateProgressBar();
 		}
 	}
-	private void updateImageAlbum()
+	private void updateComponent()
 	{
+		songTitle.setText(managerMusic.songTitlePlaying);
 		if (managerMusic.albumArt == null) {
 			Drawable draw = context.getResources().getDrawable(R.drawable.adele);
 			imageAlbum.setImageDrawable(draw);

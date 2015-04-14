@@ -85,7 +85,11 @@ public class Content extends Activity implements MusicManager.ManagerMusicListen
 						if(name.equalsIgnoreCase("Playlist"))
 						{
 							long idSong = cursor.getLong(0);
-							arrayListSong.add(managerMusic.getSong(idSong));
+							String titleSong = managerMusic.getSong(idSong);
+							if(titleSong != null)
+							{
+								arrayListSong.add(titleSong);
+							}
 						}
 						else 
 							arrayListSong.add(cursor.getString(0).toString());
