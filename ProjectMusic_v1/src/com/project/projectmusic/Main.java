@@ -48,28 +48,36 @@ import android.widget.ListView;
 public class Main extends FragmentActivity implements
 		MusicManager.ManagerMusicListener, SeekBar.OnSeekBarChangeListener,
 		ActionBar.TabListener {
+	//properties handle component of DrawerLayout
 	private DrawerLayout drawerLayout;
 	private RelativeLayout drawerRelative;
 	private ActionBarDrawerToggle actionBarDrawerToggle;
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
-	Cursor cur;
-	ArrayList<ExpandableListGroup> listGroup;
-	ArrayList<ExpandableListChild> listChild;
-	private ListView listView;
+	private TextView fill_all, fill_album, fill_artist, fill_playlist,
+	fill_genre, fill_type;
+	//Cursor cur;
+	private ArrayList<ExpandableListGroup> listGroup;
+	private ArrayList<ExpandableListChild> listChild;
+	//private ListView listView;
+	//properties handle component show music
 	private AdapterListShow listSongAdapter;
-	private ArrayList<String> arrayListSong = new ArrayList<String>();
+	//private ArrayList<String> arrayListSong = new ArrayList<String>();
+	//properties handle component viewpager
 	private ViewPager viewPager;// ViewPager
 	// private ViewPagerAdapter viewPagerAdapter;
 	private AdapterViewPager_Common viewAdapter;
 	private ArrayList<View> arrayView;
+	//properties handle component actionbar
 	private ActionBar actionBar;
 	private String[] tabs = { "Song", "Album", "Artist", "Playlist", "Genre",
 			"Type" };
-	// component layout
+	//component layout
 	private ImageView btnNext;
 	private ImageView btnPrevious;
 	public static SeekBar songProgressBar;
+	public static ImageView btnPlay;
+	public static TextView songTitleLabel;
 	// handle
 	MusicManager managerMusic;
 	private Handler handler;
@@ -77,23 +85,14 @@ public class Main extends FragmentActivity implements
 	private int seekForwardTime = 5000; // 5000 ms
 	private int seekBackwardTime = 5000; // 5000 ms
 	private String songPath = null, songTitle = null;
-	// component drawer
-	private TextView fill_all, fill_album, fill_artist, fill_playlist,
-			fill_genre, fill_type;
-	// static
-	// public static MediaPlayer mediaPlayer;
-	public static ImageView btnPlay;
-	public static TextView songTitleLabel;
-	// public static ArrayList<Song> arrayPlaying, arrayPlayingDefault;
-	public static String songTitlePlaying;
+	//notification
 	private MusicNotification musicNotification;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		//
-		musicNotification = new MusicNotification(this);
+		musicNotification = new MusicNotification(this);//call and show notification
 		// component layout
 		View viewInclude = findViewById(R.id.main_layout_playmusic);
 		btnPlay = (ImageView) viewInclude.findViewById(R.id.btnPlay);
@@ -102,7 +101,6 @@ public class Main extends FragmentActivity implements
 		songTitleLabel = (TextView) viewInclude.findViewById(R.id.songTitle);
 		songProgressBar = (SeekBar) viewInclude
 				.findViewById(R.id.songProgressBar);
-		listView = (ListView) findViewById(R.id.listMusic);
 		// component drawer
 		fill_all = (TextView) findViewById(R.id.fill_all);
 		fill_album = (TextView) findViewById(R.id.fill_album);
@@ -110,14 +108,13 @@ public class Main extends FragmentActivity implements
 		fill_playlist = (TextView) findViewById(R.id.fill_playlist);
 		fill_genre = (TextView) findViewById(R.id.fill_genre);
 		fill_type = (TextView) findViewById(R.id.fill_type);
-		// handle
+		//MusicManager class
 		managerMusic = new MusicManager(this);
 		managerMusic.setActivity(Main.this);
 		handler = new Handler();
 		utils = new Utilities();
 		// handle ViewPager and ActionBar
 		viewPager = (ViewPager) findViewById(R.id.viewpager);
-		// viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 		arrayView = new ArrayList<View>();
 		LayoutInflater inflater = getLayoutInflater();
 		arrayView.add(inflater.inflate(R.layout.music_category, null));
@@ -128,8 +125,8 @@ public class Main extends FragmentActivity implements
 		arrayView.add(inflater.inflate(R.layout.music_category, null));
 		viewAdapter = new AdapterViewPager_Common(arrayView,
 				getApplicationContext(), Main.this);
-		// viewPager.setAdapter(viewPagerAdapter);
 		viewPager.setAdapter(viewAdapter);
+		//actionbar
 		actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		for (String tab : tabs) {
@@ -137,6 +134,7 @@ public class Main extends FragmentActivity implements
 					.setTabListener(this));
 		}
 		actionBar.setSelectedNavigationItem(0);
+		//event viewpager
 		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
@@ -151,32 +149,28 @@ public class Main extends FragmentActivity implements
 			public void onPageScrollStateChanged(int arg0) {
 			}
 		});
-		// hanlde DrawerLayout
+		//call handle DrawerLayout
 		handleDrawerLayout();
 		// event btnPlay
 		btnPlay.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*
-				 * if(managerMusic.play()) {
-				 * btnPlay.setImageResource(R.drawable.btn_play); } else {
-				 * btnPlay.setImageResource(R.drawable.btn_pause); }
-				 */
 				checkMusicPlaying();
 			}
 		});
 		btnNext.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				managerMusic.nextSong();
+				managerMusic.nextButton();
 			}
 		});
 		btnPrevious.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				managerMusic.previousSong();
+				managerMusic.previousButton();
 			}
 		});
+		//event click show Player
 		songTitleLabel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -187,7 +181,7 @@ public class Main extends FragmentActivity implements
 				}
 			}
 		});
-		// Item Drawer Event
+		//Drawer Event
 		fill_all.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -230,7 +224,7 @@ public class Main extends FragmentActivity implements
 				drawerLayout.closeDrawer(GravityCompat.START);
 			}
 		});
-		// get value BroadcastReceive
+		//register value BroadcastReceive
 		registerReceiver(br, new IntentFilter(
 				"com.project.projectmusic.PREVIOUS"));
 		registerReceiver(br, new IntentFilter("com.project.projectmusic.PLAY"));
@@ -239,7 +233,7 @@ public class Main extends FragmentActivity implements
 
 	// check have playing music not or no
 	private void checkMusicPlaying() {
-		if (managerMusic.play()) {
+		if (managerMusic.playButton()) {
 			btnPlay.setImageResource(R.drawable.btn_play);
 			musicNotification.pause();
 		} else {
@@ -360,12 +354,11 @@ public class Main extends FragmentActivity implements
 					totalDuration));
 			songProgressBar.setProgress(progress);
 			if (progress >= 99) {
-				if(managerMusic.count >= (managerMusic.arrayPlay.size() - 1)
-						|| managerMusic.count >= (managerMusic.arrayPick.size() - 1)) {
-					managerMusic.repeatMusic();
-				} else 
-				{
-					managerMusic.nextSong();
+				if (managerMusic.count >= (managerMusic.arrayPlay.size() - 1)
+						|| managerMusic.count >= (managerMusic.arraySelect.size() - 1)) {
+					managerMusic.repeatButton();
+				} else {
+					managerMusic.nextButton();
 				}
 			}
 			handler.postDelayed(this, 100);
@@ -402,11 +395,11 @@ public class Main extends FragmentActivity implements
 			if (value.equalsIgnoreCase("layout")) {
 
 			} else if (value.equalsIgnoreCase("previous")) {
-				managerMusic.previousSong();
+				managerMusic.previousButton();
 			} else if (value.equalsIgnoreCase("play")) {
 				checkMusicPlaying();
 			} else if (value.equalsIgnoreCase("next")) {
-				managerMusic.nextSong();
+				managerMusic.nextButton();
 			}
 		}
 	};

@@ -55,20 +55,6 @@ public class MusicNotification extends Notification {
 		notificationManager.notify(2,notification);
 	}
 	
-	/*public void update()
-	{
-		if(musicManager.play())
-		{
-			notificationView.setImageViewResource(R.id.btnPlay, R.drawable.btn_play);
-			//notificationManager.notify();
-		}
-		else
-		{
-			notificationView.setImageViewResource(R.id.btnPlay, R.drawable.btn_pause);
-			//notificationManager.notify();
-		}
-		notificationManager.notify(2, notification);
-	}*/
 	public void play()
 	{
 		notificationView.setImageViewResource(R.id.btnPlay, R.drawable.btn_pause);

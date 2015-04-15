@@ -112,7 +112,7 @@ public class MusicListShow extends Activity implements MusicManager.ManagerMusic
 		btnPlay.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(managerMusic.play())
+				if(managerMusic.playButton())
 				{
 					btnPlay.setImageResource(R.drawable.btn_play);
 					Main.btnPlay.setImageResource(R.drawable.btn_play);
@@ -127,13 +127,13 @@ public class MusicListShow extends Activity implements MusicManager.ManagerMusic
 		btnNext.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				managerMusic.nextSong();
+				managerMusic.nextButton();
 			}
 		});
 		btnPrevious.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				managerMusic.previousSong();
+				managerMusic.previousButton();
 			}
 		});
 		songTitleLabel.setOnClickListener(new View.OnClickListener() {		
@@ -222,7 +222,7 @@ public class MusicListShow extends Activity implements MusicManager.ManagerMusic
 			   int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
 			   if(progress >= 99 && managerMusic.count >= (managerMusic.arrayPlay.size()-1))
 			   {
-				   managerMusic.repeatMusic();
+				   managerMusic.repeatButton();
 			   }
 			   songProgressBar.setProgress(progress);		
 		       handler.postDelayed(this, 100);	    

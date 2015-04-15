@@ -47,7 +47,7 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 	private int seekBackwardTime = 5000; // 5000 ms
 	MusicManager managerMusic;
 	//component playlist
-	private ListView listView, listView_Pick;
+	private ListView listView;//, listView_Pick;
 	private AdapterListShow adapterListView;
 	public AdapterViewPager_PlayerPlaylist(ArrayList<View> pageViews, Context context, Activity act) {
 		super();
@@ -84,11 +84,17 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 		case 1:
 		{
 			listView = (ListView) pageViews.get(position).findViewById(R.id.playlist_common);
-			listView_Pick = (ListView) pageViews.get(position).findViewById(R.id.playlist_pick);
-			adapterListView = new AdapterListShow(context, act, R.layout.playlist_selection, managerMusic.arrayPlay);
+			//listView_Pick = (ListView) pageViews.get(position).findViewById(R.id.playlist_pick);
+			if (managerMusic.getIsPlayMusicWithArraySelect()) {
+				adapterListView = new AdapterListShow(context, act,
+						R.layout.playlist_selection, managerMusic.getArraySelect());
+			} else {
+				adapterListView = new AdapterListShow(context, act,
+						R.layout.playlist_selection, managerMusic.getArrayPlay());
+			}
 			listView.setAdapter(adapterListView);
-			adapterListView = new AdapterListShow(context, act, R.layout.playlist_selection, managerMusic.arrayPick);
-			listView_Pick.setAdapter(adapterListView);
+			
+			//listView_Pick.setAdapter(adapterListView);
 			break;
 		}
 		default:
@@ -185,11 +191,11 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 			   }*/
 			   if (progress >= 99) {
 					if(managerMusic.count >= (managerMusic.arrayPlay.size() - 1)
-							|| managerMusic.count >= (managerMusic.arrayPick.size() - 1)) {
-						managerMusic.repeatMusic();
+							|| managerMusic.count >= (managerMusic.arraySelect.size() - 1)) {
+						managerMusic.repeatButton();
 					} else 
 					{
-						managerMusic.nextSong();
+						managerMusic.nextButton();
 					}
 				}
 			   updateComponent();
@@ -227,7 +233,7 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 		btnPlay.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(managerMusic.play())
+				if(managerMusic.playButton())
 				{
 					btnPlay.setImageResource(R.drawable.btn_play);
 				}
@@ -240,13 +246,13 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 		btnNext.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				managerMusic.nextSong();				
+				managerMusic.nextButton();				
 			}
 		});
 		btnPrevious.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				managerMusic.previousSong();		
+				managerMusic.previousButton();		
 			}
 		});
 		btnForward.setOnClickListener(new View.OnClickListener() {
@@ -282,7 +288,7 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 		btnShuffle.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				managerMusic.shuffleMusic();
+				managerMusic.shuffleButton();
 				adapterListView.notifyDataSetChanged();
 				listView.setAdapter(adapterListView);
 			}

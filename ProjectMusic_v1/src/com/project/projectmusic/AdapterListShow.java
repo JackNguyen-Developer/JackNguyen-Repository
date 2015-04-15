@@ -67,11 +67,16 @@ public class AdapterListShow extends ArrayAdapter<String> {
 				
 				@Override
 				public void onClick(View v) {
-					musicManager.arrayPlay = arrayList;
+					/*musicManager.arrayPlay = arrayList;
 					musicManager.count = position;			
 					musicManager.setActivity(act);		
-					musicManager.playSong();	
-					
+					musicManager.playSong();	*/
+					//
+					musicManager.notPlayMusicWithArraySelect();
+					musicManager.setArrayPlay(arrayList);
+					musicManager.setCount(position);
+					musicManager.setActivity(act);			
+					musicManager.playSong();
 				}
 			});
 			

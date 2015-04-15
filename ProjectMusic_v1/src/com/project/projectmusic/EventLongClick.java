@@ -84,15 +84,15 @@ public class EventLongClick extends DialogFragment implements OnLongClickListene
 			public void onClick(View v) {
 				if (item == null && arrayItem != null) {
 					for (String item : arrayItem) {
-						musicManager.arrayPick.add(item);
+						musicManager.arraySelect.add(item);
 					}
 				} else {
-					musicManager.arrayPick.add(item);
+					musicManager.arraySelect.add(item);
 
 				}
-				if (!musicManager.isPlayMusicWithArrayPick) {
-					musicManager.count = -1;
-					musicManager.isPlayMusicWithArrayPick = true;
+				if (!musicManager.getIsPlayMusicWithArraySelect()) {
+					musicManager.resetCount();
+					musicManager.isPlayMusicWithArraySelect();
 				}
 				getDialog().cancel();
 			}

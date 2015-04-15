@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.sax.StartElementListener;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,12 +42,23 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 		this.act = act;
 		//get arrayPlay
 		arrayPlay = new ArrayList<String>();
+		//arrayPlay = null;
 		managerMusic = new MusicManager(context);
 	}
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		View view= convertView;
 		LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+		//setArrayPlay
+		if (!(arrayPlay.size() > 0) && items.get(position).getName().equalsIgnoreCase("Song")) {
+			for (int i = 0; i < items.size(); i++) {
+				String title = items.get(i).getTitle();
+				arrayPlay.add(title);
+			}
+			managerMusic.setPlayListDefault(arrayPlay);
+			Log.e("","set finish arrayPlayDefault");
+		}
+		//
 		if(view == null) view = layoutInflater.inflate(R.layout.list_item, null);
 		final Item item = items.get(position);
 		if(item != null)
@@ -58,7 +70,7 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 			if (item.getName() != null) {
 				if(item.getName().equalsIgnoreCase("Artist"))
 				{
-					Drawable draw = context.getResources().getDrawable(R.drawable.ic_artists);
+					Drawable draw = context.getResources().getDrawable(R.drawable.icon_artist);
 					image.setImageDrawable(draw);
 				}
 				if (item.getImage() != null) {
@@ -81,16 +93,9 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 				public void onClick(View v) {
 					if(item.getName().equalsIgnoreCase("Song"))
 					{
-						//ArrayList<Song> arrayPlaying = new ArrayList<Song>();
-						ArrayList<String> arrayPlay = new ArrayList<String>();
-						for(int i = 0; i < items.size(); i++)
-						{
-							String title = items.get(i).getTitle();
-							arrayPlay.add(title);
-						}		
-						//MusicManager managerMusic = new MusicManager(context);
-						managerMusic.arrayPlay = arrayPlay;
-						managerMusic.count = position;
+						managerMusic.notPlayMusicWithArraySelect();
+						managerMusic.setArrayPlay(arrayPlay);
+						managerMusic.setCount(position);
 						managerMusic.setActivity(act);			
 						managerMusic.playSong();
 						//set long press
