@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contain"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/selecter_button_gray_orange"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="3dp"
-    android:background="#ffffcc"
-    android:id="@+id/contain"
-    >
-	<ImageView
-	    android:id="@+id/image"
-	    android:layout_marginLeft="10dp"
-	    android:padding="3dp"
-	    android:layout_width="45dp"
-	    android:layout_height="45dp"
-	    android:src="@drawable/song_icon" 
-	    />
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:padding="3dp"
+        android:src="@drawable/ic_song" />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:lines="1"
-        android:textSize="16dp"
-        android:textColor="#220000"
-        android:text="This is Title"
-        android:gravity="center_vertical"
         android:layout_marginLeft="10dp"
-        
-         />
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:text="This is Title"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp" />
 
 </LinearLayout>

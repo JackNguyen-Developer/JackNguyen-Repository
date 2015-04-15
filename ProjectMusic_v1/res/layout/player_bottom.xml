@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_gravity="center"
-    android:background="#222222" 
+    android:background="#3fC0C0C0" 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="bottom">
