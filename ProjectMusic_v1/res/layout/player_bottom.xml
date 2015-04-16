@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:layout_gravity="center"
-    android:background="#3fC0C0C0" 
+    android:background="#616161" 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="bottom">
@@ -50,7 +50,7 @@
         android:layout_below="@id/songProgressBar"
         android:layout_toLeftOf="@id/btnNext"
         android:background="@null"
-        android:src="@drawable/btn_play" />
+        android:src="@drawable/ic_play" />
 
     <ImageView
         android:id="@+id/btnPrevious"

@@ -70,7 +70,7 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 			if (item.getName() != null) {
 				if(item.getName().equalsIgnoreCase("Artist"))
 				{
-					Drawable draw = context.getResources().getDrawable(R.drawable.icon_artist);
+					Drawable draw = context.getResources().getDrawable(R.drawable.ic_artists);
 					image.setImageDrawable(draw);
 				}
 				if (item.getImage() != null) {

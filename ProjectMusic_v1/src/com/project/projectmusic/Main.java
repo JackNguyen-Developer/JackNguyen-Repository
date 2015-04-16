@@ -1,3 +1,4 @@
+
 package com.project.projectmusic;
 
 import java.util.ArrayList;
@@ -166,6 +167,7 @@ public class Main extends FragmentActivity implements
 		});
 		btnPrevious.setOnClickListener(new View.OnClickListener() {
 			@Override
+			
 			public void onClick(View v) {
 				managerMusic.previousButton();
 			}
