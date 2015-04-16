@@ -1,12 +1,15 @@
 package com.project.projectmusic;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v4.view.ViewPager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 //import android.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -15,8 +18,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class AdapterViewPager_Common extends PagerAdapter {
 	ArrayList<View> arrayView;
@@ -24,6 +31,7 @@ public class AdapterViewPager_Common extends PagerAdapter {
 	Activity act;
 	//
 	private ListView listView;
+	private View includeExplorer;
 	private AdapterCommon adapter;
 	private Cursor cursor;
 	private ArrayList<Item> arraySong = new ArrayList<Item>();
@@ -73,6 +81,15 @@ public class AdapterViewPager_Common extends PagerAdapter {
 		case 5: {
 			listView = (ListView) arrayView.get(5).findViewById(R.id.list_common);
 			viewType();
+		}
+		case 6: {
+			includeExplorer =(View) arrayView.get(6).findViewById(R.id.musicCategory_explorer);
+			listView = (ListView) arrayView.get(6).findViewById(R.id.list_common);
+			explorerList =(ListView) includeExplorer.findViewById(R.id.explorer_list);
+			listView.setVelocityScale(ListView.GONE);
+			includeExplorer.setVisibility(View.VISIBLE);
+			explorerMyPath = (TextView) arrayView.get(6).findViewById(R.id.path);
+			explorerHandle();
 		}
 		}
 		((ViewPager) v).addView(arrayView.get(position));
@@ -177,13 +194,13 @@ public class AdapterViewPager_Common extends PagerAdapter {
 				while (!cursor.isAfterLast()) {
 
 					Item item = new Item();
-					long id = cursor.getLong(1);
+					//long id = cursor.getLong(1);
+					//Log.d("",String.valueOf(id));
 					item.setId(cursor.getLong(1));
-					
 					item.setName("Playlist");
-					String title = cursor.getString(0);
+					//String title = cursor.getString(0);
+					//Log.d("",title);
 					item.setTitle(cursor.getString(0));
-					
 					cursor.moveToNext();
 					arrayPlaylist.add(item);
 
@@ -243,5 +260,83 @@ public class AdapterViewPager_Common extends PagerAdapter {
 		cursor.close();
 		adapter = new AdapterCommon(context, act, R.layout.list_item, arrayType);
 		listView.setAdapter(adapter);
+	}
+	private List<String> item = null;
+	private List<String> path = null;
+	private String root;
+	private TextView explorerMyPath;
+	private ListView explorerList;
+	private void explorerHandle()
+	{
+		
+		root = "storage";
+		getDir(root);
+		explorerList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				File file = new File(path.get(position));
+				if (file.isDirectory()) {
+					if (file.canRead()) {
+						getDir(path.get(position));
+					} else {
+						new AlertDialog.Builder(context)
+								.setIcon(R.drawable.ic_launcher)
+								.setTitle(
+										"[" + file.getName()
+												+ "] folder can't be read!")
+								.setPositiveButton("OK", null).show();
+					}
+				} else {
+					MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+					mmr.setDataSource(file.getPath());
+					String title = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+					Log.e("",title);
+					managerMusic.isPlayMusicWithArraySelect();
+					managerMusic.resetArraySelect();
+					managerMusic.addArraySelect(title);
+					managerMusic.firstCount();
+					//managerMusic.setCount(position);
+					managerMusic.setActivity(act);			
+					managerMusic.playSong();
+				}
+				
+			}
+			
+		});
+	}
+	private void getDir(String dirPath) {
+		explorerMyPath.setText("Location: " + dirPath);
+		item = new ArrayList<String>();
+		path = new ArrayList<String>();
+		File f = new File(dirPath);
+		File[] files = f.listFiles();
+
+		if (!dirPath.equals(root)) {
+			item.add(root);
+			path.add(root);
+			item.add("../");
+			// if(!dirPath.equals(root))
+			path.add(f.getParent());
+		}
+
+		for (int i = 0; i < files.length; i++) {
+			File file = files[i];
+
+			if (!file.isHidden() && file.canRead()) {
+				path.add(file.getPath());
+				if (file.isDirectory()) {
+					/* if (ReadSDCard() == true) { */
+					item.add(file.getName());
+				} else {
+					item.add(file.getName());
+				}
+
+			}
+		}
+		ArrayAdapter<String> fileList = new ArrayAdapter<String>(context,
+				R.layout.explorer_row, item);
+		explorerList.setAdapter(fileList);
 	}
 }

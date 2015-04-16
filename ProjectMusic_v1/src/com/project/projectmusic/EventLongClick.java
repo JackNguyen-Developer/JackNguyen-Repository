@@ -83,11 +83,11 @@ public class EventLongClick extends DialogFragment implements OnLongClickListene
 			@Override
 			public void onClick(View v) {
 				if (item == null && arrayItem != null) {
-					for (String item : arrayItem) {
-						musicManager.arraySelect.add(item);
+					for (String title : arrayItem) {
+						musicManager.addArraySelect(title);
 					}
 				} else {
-					musicManager.arraySelect.add(item);
+					musicManager.addArraySelect(item);
 
 				}
 				if (!musicManager.getIsPlayMusicWithArraySelect()) {
@@ -142,18 +142,6 @@ public class EventLongClick extends DialogFragment implements OnLongClickListene
 					int position, long id) {
 				cursor.moveToPosition(position);
 				long idPlayList = cursor.getLong(1);
-				//
-				/*if (name != null && value != null) {
-					Cursor cursorSub = musicManager.getListMusic(name, value,
-							id);
-					cursorSub.moveToFirst();
-					do {
-						String titleMusic = cursorSub.getString(0);
-						arrayItem.add(titleMusic);
-					} while (cursorSub.moveToNext());
-					cursorSub.close();
-				}*/
-				//
 				System.out.println("data item: "+item);
 				musicManager.addItemPlayList(idPlayList, arrayItem, item);
 				getDialog().cancel();
@@ -167,11 +155,5 @@ public class EventLongClick extends DialogFragment implements OnLongClickListene
 		this.show(act.getFragmentManager(),"");
 		return true;
 	}
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		//Intent in = new Intent();
-		//in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		//context.startActivity(in);
-	}
+	
 }

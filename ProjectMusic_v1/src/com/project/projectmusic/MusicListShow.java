@@ -35,13 +35,6 @@ public class MusicListShow extends Activity implements MusicManager.ManagerMusic
 	private Handler handler;
 	AdapterListShow listSongAdapter;
 	@Override
-	protected void onPause() {
-		
-		super.onPause();
-		listSongAdapter.notifyDataSetChanged();
-		listView.setAdapter(listSongAdapter);
-	}
-	@Override
 	protected void onResume() {
 		super.onResume();
 		listSongAdapter.notifyDataSetChanged();
@@ -84,11 +77,13 @@ public class MusicListShow extends Activity implements MusicManager.ManagerMusic
 					try {	
 						if(name.equalsIgnoreCase("Playlist"))
 						{
+							//Log.e("","this is Playlist");
 							long idSong = cursor.getLong(0);
 							String titleSong = managerMusic.getSong(idSong);
 							if(titleSong != null)
 							{
 								arrayListSong.add(titleSong);
+								//Log.e("",String.valueOf(idSong));
 							}
 						}
 						else 
@@ -139,7 +134,7 @@ public class MusicListShow extends Activity implements MusicManager.ManagerMusic
 		songTitleLabel.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
-				if(managerMusic.isPlaying)
+				if(managerMusic.getIsPlaying())
 				{
 				Intent in = new Intent(getApplicationContext(), MusicPlayer.class);
 				startActivity(in);
@@ -179,11 +174,11 @@ public class MusicListShow extends Activity implements MusicManager.ManagerMusic
 		try {
 			songProgressBar.setVisibility(SeekBar.VISIBLE);
 			Main.songProgressBar.setVisibility(SeekBar.VISIBLE);
-			
-			if(managerMusic.songTitlePlaying != null)
-				{songTitleLabel.setText(managerMusic.songTitlePlaying);
-				Main.songTitleLabel.setText(managerMusic.songTitlePlaying);}
-			else songTitleLabel.setText("___");							
+			String titleMusic = managerMusic.getSongTitle();
+			if(titleMusic != null)
+				{songTitleLabel.setText(titleMusic);
+				Main.songTitleLabel.setText(titleMusic);}
+			else songTitleLabel.setText("Not title");							
 			Main.btnPlay.setImageResource(R.drawable.btn_pause);	
 			btnPlay.setImageResource(R.drawable.btn_pause);
 			songProgressBar.setProgress(0);
@@ -203,40 +198,45 @@ public class MusicListShow extends Activity implements MusicManager.ManagerMusic
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		handler.removeCallbacks(mUpdateTimeTask);
-		int totalDuration = managerMusic.mediaPlayer.getDuration();
+		int totalDuration = managerMusic.getMediaPlayer().getDuration();
 		int currentPosition = utils.progressToTimer(seekBar.getProgress(), totalDuration);		
-		managerMusic.mediaPlayer.seekTo(currentPosition);
+		managerMusic.getMediaPlayer().seekTo(currentPosition);
 		updateProgressBar();	
 	}
 	
 	public void updateProgressBar() {
-		songTitleLabel.setText(managerMusic.songTitlePlaying);
-		Main.songTitleLabel.setText(managerMusic.songTitlePlaying);
+		//songTitleLabel.setText(managerMusic.songTitlePlaying);
+		//Main.songTitleLabel.setText(managerMusic.songTitlePlaying);
         handler.postDelayed(mUpdateTimeTask, 100);        
     }		
 	// Background Runnable thread
 	private Runnable mUpdateTimeTask = new Runnable() {
 		   public void run() {
-			   long totalDuration = managerMusic.mediaPlayer.getDuration();
-			   long currentDuration = managerMusic.mediaPlayer.getCurrentPosition();			  			   
+			   long totalDuration = managerMusic.getMediaPlayer().getDuration();
+			   long currentDuration = managerMusic.getMediaPlayer().getCurrentPosition();			  			   
 			   int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
-			   if(progress >= 99 && managerMusic.count >= (managerMusic.arrayPlay.size()-1))
-			   {
-				   managerMusic.repeatButton();
-			   }
+			   if (managerMusic.getCount() >= (managerMusic.getArrayPlay().size() - 1)
+						|| managerMusic.getCount() >= (managerMusic.getArraySelect().size() - 1)) {
+					managerMusic.repeatButton();
+				} else {
+					managerMusic.nextButton();
+				}
+			   String titleMusic = managerMusic.getSongTitle();
+			   songTitleLabel.setText(titleMusic);
+			   Main.songTitleLabel.setText(titleMusic);
 			   songProgressBar.setProgress(progress);		
 		       handler.postDelayed(this, 100);	    
 		   }
 		};
 	public void checkMusicPlay()
 	{
-		if(managerMusic.mediaPlayer.isPlaying() || managerMusic.isPlaying)
+		if(managerMusic.getMediaPlayer().isPlaying() || managerMusic.getIsPlaying())
 		{
 			songProgressBar.setVisibility(SeekBar.VISIBLE);
 			Main.songProgressBar.setVisibility(SeekBar.VISIBLE);
 			updateProgressBar();
 			btnPlay.setImageResource(R.drawable.btn_play);
-			songTitleLabel.setText(managerMusic.songTitlePlaying);
+			//songTitleLabel.setText(managerMusic.songTitlePlaying);
 		}
 	}
 }

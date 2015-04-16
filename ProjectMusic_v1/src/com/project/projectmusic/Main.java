@@ -71,7 +71,7 @@ public class Main extends FragmentActivity implements
 	//properties handle component actionbar
 	private ActionBar actionBar;
 	private String[] tabs = { "Song", "Album", "Artist", "Playlist", "Genre",
-			"Type" };
+			"Type", "Select" };
 	//component layout
 	private ImageView btnNext;
 	private ImageView btnPrevious;
@@ -117,6 +117,7 @@ public class Main extends FragmentActivity implements
 		viewPager = (ViewPager) findViewById(R.id.viewpager);
 		arrayView = new ArrayList<View>();
 		LayoutInflater inflater = getLayoutInflater();
+		arrayView.add(inflater.inflate(R.layout.music_category, null));
 		arrayView.add(inflater.inflate(R.layout.music_category, null));
 		arrayView.add(inflater.inflate(R.layout.music_category, null));
 		arrayView.add(inflater.inflate(R.layout.music_category, null));
@@ -174,7 +175,7 @@ public class Main extends FragmentActivity implements
 		songTitleLabel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (managerMusic.isPlaying) {
+				if (managerMusic.getIsPlaying()) {
 					Intent in = new Intent(getApplicationContext(),
 							MusicPlayer.class);
 					startActivity(in);
@@ -305,8 +306,9 @@ public class Main extends FragmentActivity implements
 		try {
 			musicNotification.play();
 			songProgressBar.setVisibility(SeekBar.VISIBLE);
-			if (managerMusic.songTitlePlaying != null)
-				songTitleLabel.setText(managerMusic.songTitlePlaying);
+			String titleMusic = managerMusic.getSongTitle();
+			if (titleMusic != null)
+				songTitleLabel.setText(titleMusic);
 			else
 				songTitleLabel.setText("___");
 			btnPlay.setImageResource(R.drawable.btn_pause);
@@ -332,30 +334,31 @@ public class Main extends FragmentActivity implements
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		handler.removeCallbacks(mUpdateTimeTask);
-		int totalDuration = managerMusic.mediaPlayer.getDuration();
+		int totalDuration = managerMusic.getMediaPlayer().getDuration();
 		int currentPosition = utils.progressToTimer(seekBar.getProgress(),
 				totalDuration);
-		managerMusic.mediaPlayer.seekTo(currentPosition);
+		managerMusic.getMediaPlayer().seekTo(currentPosition);
 		updateProgressBar();
 	}
 
 	public void updateProgressBar() {
-		songTitleLabel.setText(managerMusic.songTitlePlaying);
+		
 		handler.postDelayed(mUpdateTimeTask, 100);
 	}
 
 	// Background Runnable thread
 	private Runnable mUpdateTimeTask = new Runnable() {
 		public void run() {
-			long totalDuration = managerMusic.mediaPlayer.getDuration();
-			long currentDuration = managerMusic.mediaPlayer
+			long totalDuration = managerMusic.getMediaPlayer().getDuration();
+			long currentDuration = managerMusic.getMediaPlayer()
 					.getCurrentPosition();
 			int progress = (int) (utils.getProgressPercentage(currentDuration,
 					totalDuration));
 			songProgressBar.setProgress(progress);
+			songTitleLabel.setText(managerMusic.getSongTitle());
 			if (progress >= 99) {
-				if (managerMusic.count >= (managerMusic.arrayPlay.size() - 1)
-						|| managerMusic.count >= (managerMusic.arraySelect.size() - 1)) {
+				if (managerMusic.getCount() >= (managerMusic.getArrayPlay().size() - 1)
+						|| managerMusic.getCount() >= (managerMusic.getArraySelect().size() - 1)) {
 					managerMusic.repeatButton();
 				} else {
 					managerMusic.nextButton();

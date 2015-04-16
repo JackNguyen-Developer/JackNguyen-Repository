@@ -53,25 +53,10 @@ public class AdapterListShow extends ArrayAdapter<String> {
 			TextView songTitle = ((ViewGroup_ListShow) workView).title;
 			LinearLayout contain = ((ViewGroup_ListShow) workView).contain;
 			songTitle.setText(item);
-			/*songTitle.setOnClickListener(new View.OnClickListener() {		
-				@Override
-				public void onClick(View v) {
-					musicManager.arrayPlay = arrayList;
-					musicManager.count = position;			
-					musicManager.setActivity(act);		
-					musicManager.playSong();		
-				}
-			});*/
-		
 			contain.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					/*musicManager.arrayPlay = arrayList;
-					musicManager.count = position;			
-					musicManager.setActivity(act);		
-					musicManager.playSong();	*/
-					//
 					musicManager.notPlayMusicWithArraySelect();
 					musicManager.setArrayPlay(arrayList);
 					musicManager.setCount(position);
@@ -79,10 +64,7 @@ public class AdapterListShow extends ArrayAdapter<String> {
 					musicManager.playSong();
 				}
 			});
-			
 			contain.setOnLongClickListener(new EventLongClick(context, act, item, null, null, -1));	
-			
-			
 		}	
 		return workView;
 	}

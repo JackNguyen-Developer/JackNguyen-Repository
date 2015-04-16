@@ -84,7 +84,6 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 		case 1:
 		{
 			listView = (ListView) pageViews.get(position).findViewById(R.id.playlist_common);
-			//listView_Pick = (ListView) pageViews.get(position).findViewById(R.id.playlist_pick);
 			if (managerMusic.getIsPlayMusicWithArraySelect()) {
 				adapterListView = new AdapterListShow(context, act,
 						R.layout.playlist_selection, managerMusic.getArraySelect());
@@ -93,8 +92,6 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 						R.layout.playlist_selection, managerMusic.getArrayPlay());
 			}
 			listView.setAdapter(adapterListView);
-			
-			//listView_Pick.setAdapter(adapterListView);
 			break;
 		}
 		default:
@@ -143,9 +140,10 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 	
 	public void playMusic() {
 		try {
-			if(managerMusic.songTitlePlaying != null)
-				songTitle.setText(managerMusic.songTitlePlaying);
-			else songTitle.setText("___");
+			String titleMusic = managerMusic.getSongTitle();
+			if(titleMusic != null)
+				songTitle.setText(titleMusic);
+			else songTitle.setText("Not title");
 			btnPlay.setImageResource(R.drawable.btn_pause);	
 			songProgressBar.setProgress(0);
 			songProgressBar.setMax(100);
@@ -166,23 +164,23 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		handler.removeCallbacks(mUpdateTimeTask);
-		int totalDuration = managerMusic.mediaPlayer.getDuration();
+		int totalDuration = managerMusic.getMediaPlayer().getDuration();
 		int currentPosition = utils.progressToTimer(seekBar.getProgress(), totalDuration);		
-		managerMusic.mediaPlayer.seekTo(currentPosition);
+		managerMusic.getMediaPlayer().seekTo(currentPosition);
 		updateProgressBar();
 	}
 	
 	public void updateProgressBar() {
-		songTitle.setText(managerMusic.songTitlePlaying);
-		Main.songTitleLabel.setText(managerMusic.songTitlePlaying);
+		//songTitle.setText(managerMusic.songTitlePlaying);
+		
         handler.postDelayed(mUpdateTimeTask, 100);
         
     }		
 	// Background Runnable thread
 	private Runnable mUpdateTimeTask = new Runnable() {
 		   public void run() {
-			   long totalDuration = managerMusic.mediaPlayer.getDuration();
-			   long currentDuration = managerMusic.mediaPlayer.getCurrentPosition();			  			   
+			   long totalDuration = managerMusic.getMediaPlayer().getDuration();
+			   long currentDuration = managerMusic.getMediaPlayer().getCurrentPosition();			  			   
 			   int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
 			   /*if(progress >= 99 && managerMusic.count >= (managerMusic.arrayPlay.size()-1) || progress >= 99
 						&& managerMusic.count >= (managerMusic.arrayPick.size() - 1))
@@ -190,8 +188,8 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 				   managerMusic.repeatMusic();
 			   }*/
 			   if (progress >= 99) {
-					if(managerMusic.count >= (managerMusic.arrayPlay.size() - 1)
-							|| managerMusic.count >= (managerMusic.arraySelect.size() - 1)) {
+					if(managerMusic.getCount() >= (managerMusic.getArrayPlay().size() - 1)
+							|| managerMusic.getCount() >= (managerMusic.getArraySelect().size() - 1)) {
 						managerMusic.repeatButton();
 					} else 
 					{
@@ -205,22 +203,24 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 		};
 
 	private void checkMusicPlay() {
-		if (managerMusic.mediaPlayer.isPlaying()
-				|| managerMusic.isPlaying) {
-	
+		if (managerMusic.getMediaPlayer().isPlaying()
+				|| managerMusic.getIsPlaying()) {
 			btnPlay.setImageResource(R.drawable.btn_pause);
-			songTitle.setText(managerMusic.songTitlePlaying);
+			//songTitle.setText(managerMusic.getSongTitle());
 			updateProgressBar();
 		}
 	}
 	private void updateComponent()
 	{
-		songTitle.setText(managerMusic.songTitlePlaying);
-		if (managerMusic.albumArt == null) {
+		String titleMusic = managerMusic.getSongTitle();
+		String albumArt = managerMusic.getAlbumArt();
+		songTitle.setText(titleMusic);
+		Main.songTitleLabel.setText(titleMusic);
+		if (managerMusic.getAlbumArt() == null) {
 			Drawable draw = context.getResources().getDrawable(R.drawable.adele);
 			imageAlbum.setImageDrawable(draw);
 		} else {
-			File file = new File(managerMusic.albumArt);
+			File file = new File(albumArt);
 			if (file.exists()) {
 				Bitmap bitImage = BitmapFactory.decodeFile(file
 						.getAbsolutePath());
@@ -259,22 +259,22 @@ public class AdapterViewPager_PlayerPlaylist extends PagerAdapter implements /*M
 			@Override
 			public void onClick(View v) {
 	
-				int currentPosition = managerMusic.mediaPlayer.getCurrentPosition();			
-				if(currentPosition + seekForwardTime <= managerMusic.mediaPlayer.getDuration()){		
-					managerMusic.mediaPlayer.seekTo(currentPosition + seekForwardTime);
+				int currentPosition = managerMusic.getMediaPlayer().getCurrentPosition();			
+				if(currentPosition + seekForwardTime <= managerMusic.getMediaPlayer().getDuration()){		
+					managerMusic.getMediaPlayer().seekTo(currentPosition + seekForwardTime);
 				}else{
-					managerMusic.mediaPlayer.seekTo(managerMusic.mediaPlayer.getDuration());
+					managerMusic.getMediaPlayer().seekTo(managerMusic.getMediaPlayer().getDuration());
 				}
 			}
 		});
 		btnBackward.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {		
-				int currentPosition = managerMusic.mediaPlayer.getCurrentPosition();			
+				int currentPosition = managerMusic.getMediaPlayer().getCurrentPosition();			
 				if(currentPosition - seekBackwardTime >= 0){		
-					managerMusic.mediaPlayer.seekTo(currentPosition - seekBackwardTime);
+					managerMusic.getMediaPlayer().seekTo(currentPosition - seekBackwardTime);
 				}else{			
-					managerMusic.mediaPlayer.seekTo(0);
+					managerMusic.getMediaPlayer().seekTo(0);
 				}
 				
 			}

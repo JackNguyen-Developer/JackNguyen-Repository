@@ -82,12 +82,6 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 					}
 				}
 			}
-			
-			/*for(int i = 0; i < items.size(); i++)
-			{
-				String t = items.get(i).getTitle();
-				arrayPlay.add(t);
-			}*/
 			contain.setOnClickListener(new View.OnClickListener() {				
 				@Override
 				public void onClick(View v) {
@@ -98,8 +92,6 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 						managerMusic.setCount(position);
 						managerMusic.setActivity(act);			
 						managerMusic.playSong();
-						//set long press
-						//title.setOnLongClickListener(new LongPressEvent(context, act, item.getTitle() , null));
 					} else
 					{
 						Intent in = new Intent(context,MusicListShow.class);
@@ -107,60 +99,16 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 						in.putExtra("name", item.getName());
 						in.putExtra("value", item.getTitle());
 						in.putExtra("id", item.getId());
-						context.startActivity(in);	
-						//set long press
-						//title.setOnLongClickListener(new LongPressEvent(context, act, null , arrayPlay));
+						context.startActivity(in);					
 					}
 				}
 			});
-			/*title.setOnClickListener(new View.OnClickListener() {		
-				@Override
-				public void onClick(View v) {
-					if(item.getName().equalsIgnoreCase("Song"))
-					{
-						//ArrayList<Song> arrayPlaying = new ArrayList<Song>();
-						ArrayList<String> arrayPlay = new ArrayList<String>();
-						for(int i = 0; i < items.size(); i++)
-						{
-							String title = items.get(i).getTitle();
-							arrayPlay.add(title);
-						}		
-						//MusicManager managerMusic = new MusicManager(context);
-						managerMusic.arrayPlay = arrayPlay;
-						managerMusic.count = position;
-						managerMusic.setActivity(act);			
-						managerMusic.playSong();
-						//set long press
-						//title.setOnLongClickListener(new LongPressEvent(context, act, item.getTitle() , null));
-					} else
-					{
-						Intent in = new Intent(context,Content.class);
-						in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						in.putExtra("name", item.getName());
-						in.putExtra("value", item.getTitle());
-						in.putExtra("id", item.getId());
-						context.startActivity(in);	
-						//set long press
-						//title.setOnLongClickListener(new LongPressEvent(context, act, null , arrayPlay));
-					}
-					
-				}
-			});*/
 			EventLongClick longPress; 
 			if (item.getName().equalsIgnoreCase("Song")) {
 				longPress = new EventLongClick(context, act, item.getTitle(), null, null, -1);
 			} else {
-				/*ArrayList<String> arrayMusic = new ArrayList<String>();
-				Cursor cursor = managerMusic.getListMusic(item.getName(), item.getTitle(), item.getId());
-				cursor.moveToFirst();
-				do{
-					String titleMusic = cursor.getString(0);
-					arrayMusic.add(titleMusic);
-				} while(cursor.moveToNext());
-				cursor.close();*/
 				longPress = new EventLongClick(context, act, null , item.getName(), item.getTitle(), item.getId());
 			}
-			
 			contain.setOnLongClickListener(longPress);
 		}
 		return view;
