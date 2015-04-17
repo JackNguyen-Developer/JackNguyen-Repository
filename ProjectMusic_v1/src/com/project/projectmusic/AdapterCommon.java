@@ -93,8 +93,7 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 						managerMusic.setCount(position);
 						managerMusic.setActivity(act);			
 						managerMusic.playSong();
-						//set long press
-						//title.setOnLongClickListener(new LongPressEvent(context, act, item.getTitle() , null));
+					
 					} else
 					{
 						Intent in = new Intent(context,MusicListShow.class);
