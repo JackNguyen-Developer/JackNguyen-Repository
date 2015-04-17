@@ -107,39 +107,7 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 					}
 				}
 			});
-			/*title.setOnClickListener(new View.OnClickListener() {		
-				@Override
-				public void onClick(View v) {
-					if(item.getName().equalsIgnoreCase("Song"))
-					{
-						//ArrayList<Song> arrayPlaying = new ArrayList<Song>();
-						ArrayList<String> arrayPlay = new ArrayList<String>();
-						for(int i = 0; i < items.size(); i++)
-						{
-							String title = items.get(i).getTitle();
-							arrayPlay.add(title);
-						}		
-						//MusicManager managerMusic = new MusicManager(context);
-						managerMusic.arrayPlay = arrayPlay;
-						managerMusic.count = position;
-						managerMusic.setActivity(act);			
-						managerMusic.playSong();
-						//set long press
-						//title.setOnLongClickListener(new LongPressEvent(context, act, item.getTitle() , null));
-					} else
-					{
-						Intent in = new Intent(context,Content.class);
-						in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						in.putExtra("name", item.getName());
-						in.putExtra("value", item.getTitle());
-						in.putExtra("id", item.getId());
-						context.startActivity(in);	
-						//set long press
-						//title.setOnLongClickListener(new LongPressEvent(context, act, null , arrayPlay));
-					}
-					
-				}
-			});*/
+		
 			EventLongClick longPress; 
 			if (item.getName().equalsIgnoreCase("Song")) {
 				longPress = new EventLongClick(context, act, item.getTitle(), null, null, -1);
