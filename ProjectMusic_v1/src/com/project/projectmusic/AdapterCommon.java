@@ -83,11 +83,6 @@ public class AdapterCommon extends ArrayAdapter<Item> {
 				}
 			}
 			
-			/*for(int i = 0; i < items.size(); i++)
-			{
-				String t = items.get(i).getTitle();
-				arrayPlay.add(t);
-			}*/
 			contain.setOnClickListener(new View.OnClickListener() {				
 				@Override
 				public void onClick(View v) {
